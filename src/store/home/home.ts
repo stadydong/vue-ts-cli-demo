@@ -1,4 +1,5 @@
-import { getMenu } from "@/service/api/home/home";
+import { addUser, deleteUser, getMenu, getRoleList, getUserList, updateRole, updateUserInfo } from "@/service/api/home/home";
+
 import { th } from "element-plus/es/locale";
 import { defineStore } from "pinia";
 import { useRouter } from "vue-router";
@@ -31,6 +32,24 @@ export const HomeStore = defineStore<storeId.Home,Home_State,{},Home_Actions>(st
         return Promise.reject(message)
       }
       return message
+    },
+    async GetUserList(skip, take){
+      return (await getUserList(skip, take)).data
+    },
+    async UpdateUserInfo(userFrom){
+      return (await updateUserInfo(userFrom)).data
+    },
+    async DeleteUser(user_id){
+      return (await deleteUser(user_id)).data
+    },
+    async AddUser(userFrom){
+      return (await addUser(userFrom)).data
+    },
+    async GetRoleList(skip?: number, take?: number){
+      return (await getRoleList(skip,take)).data
+    },
+    async UpdateRole(roleInfo){
+      return (await updateRole(roleInfo)).data
     }
   }
 })

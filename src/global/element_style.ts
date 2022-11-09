@@ -3,6 +3,7 @@ import "element-plus/es/components/loading/style/css"
 import 'element-plus/es/components/button/style/css'
 import 'element-plus/es/components/icon/style/css'
 import 'element-plus/es/components/message/style/css'
+import 'element-plus/es/components/table/style/css'
 // import 'element-plus/es/components/header/style/css'
 // import 'element-plus/es/components/aside/style/css'
 // import 'element-plus/es/components/main/style/css'

@@ -9,7 +9,18 @@ export const UserStore = defineStore<storeId.User,User_State,{},User_Actions>(st
   state:()=>{
     return {
       token:"",
-      info:null
+      info:null,
+      routes:[
+        {
+          path:"/",
+          redirect:"/home"
+        },
+        {
+          path:"/login",
+          name:"login",
+          component:()=>import('views/login/Login.vue'),
+        },
+      ]
     }
   },
   getters:{

@@ -2,9 +2,6 @@ import {createRouter,createWebHashHistory} from 'vue-router'
 import type {RouteRecordRaw} from 'vue-router'
 import { UserStore } from '@/store/login/user'
 import { HomeStore } from '@/store/home/home'
-import { Menu_TYPE } from '@/service/api/home/types'
-import { Component } from 'vue'
-const homeStore = HomeStore()
 
 
 const routes:RouteRecordRaw[] = [
@@ -27,7 +24,7 @@ export async function add_Routes(){
 
   await homeStore.getlocalStorage()
   console.log("router");
-  const routes:any | {} =   {
+  const routes:RouteRecordRaw =   {
     name:"home",
     path:"/home",
     component:()=>import("views/home/Home.vue"),
@@ -49,45 +46,45 @@ export async function add_Routes(){
             routes.children.push(sub_router)
             
           })
+          // console.log(routes);
+          
           router.addRoute(routes)
-          console.log(router.getRoutes());
+
         }else{
 
         }
 
       })
     }
+    return routes
 }
-
-
+let flag = true
+const whiteList = ["/login"]
 router.beforeEach(async (to,from,next)=>{
   //有token说明登录了
   //还没能获取到addRoute添加的
-  console.log(router.getRoutes());
-  
-  if(localStorage.getItem("token")){
-    if(to.path!= "/login"){
-
-    }
-
-    //添加路由
-    await add_Routes()
-    console.log(router.getRoutes());
-    UserStore().getlocalStorage()
-    //判断是否有这条路由信息
-    if(router.getRoutes().findIndex((item)=>item.path===to.path) !=-1){
-      console.log(to.fullPath); 
-      console.log(to);
+  const token = localStorage.getItem("token")
+  if(token){
+    //说明登录了
+    if(flag){
+      let routes = await add_Routes()
+      flag = false
+      console.log(111);
       
-      // debugger
-      console.log(router.options);
-      return next()
+      next({...to,replace:true})
+    }else{
+      console.log(222);
+      
+      next()
+    } 
+  }else{
+    //为白名单直接通过
+    if(whiteList.includes(to.path)){
+      next()
+    }else{
+      next("/login")
     }
-
-    
-
-    
   }
-  // return next()
+  return next()
 })
 export default router

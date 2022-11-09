@@ -8,7 +8,9 @@ import "@/assets/main.less"
 
 import { init_pinia } from './store/pinia'
 
-
-createApp(App).use(init_pinia).use(router).mount('#app')
+import  echarts  from '@/global/echarts'
+const app = createApp(App)
+// app.config.globalProperties
+app.use(init_pinia).use(router).mount('#app')
 
 

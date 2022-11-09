@@ -3,7 +3,6 @@
     <!-- <router-view name="login"></router-view> -->
 
     <router-view></router-view>
-    app
   </div>
 </template>
 
