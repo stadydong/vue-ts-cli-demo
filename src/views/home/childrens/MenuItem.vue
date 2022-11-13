@@ -22,8 +22,9 @@
 
 <script setup lang="ts">
 import { Menu_TYPE } from '@/service/api/home/types';
-import { ref } from 'vue';
-const emit = defineEmits(["changeMenu"])
+import { HomeStore } from '@/store/home/home';
+import { useRoute, useRouter } from 'vue-router';
+const homeStore = HomeStore()
 const prefix = process.env.VUE_APP_AXIOS_BASEURL as string
 interface Props {
   menu:Menu_TYPE[]
@@ -31,9 +32,11 @@ interface Props {
 const props = withDefaults(defineProps<Props>(),{
   menu:()=>[]
 })
+const route = useRoute()
+const router = useRouter()
 const currentMenu = (item:any)=>{
-  // emit("changeMenu",)
-  console.log(item);
+  router.push("/home/"+item.menu_url)
+  homeStore.getPath(route,router)
   
 }
 </script>

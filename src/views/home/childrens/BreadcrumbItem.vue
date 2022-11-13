@@ -25,10 +25,11 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { PathInfo } from './Breadcrumb.vue';
+
 import {
   ArrowDown
 } from '@element-plus/icons-vue'
+import { PathInfo } from '@/store/home/types';
 const router = useRouter()
 interface Props {
   currentPath:PathInfo[]
