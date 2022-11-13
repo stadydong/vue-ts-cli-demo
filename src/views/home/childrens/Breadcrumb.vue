@@ -14,7 +14,7 @@
 <script lang="ts" setup>
 import { ArrowRight } from '@element-plus/icons-vue';
 import { reactive } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 
 
@@ -29,6 +29,10 @@ const currentPath:Paths = reactive({paths:[]})
 
 const route = useRoute()
 //截取前面的 / 
+
+const router = useRouter()
+console.log(router.getRoutes());
+
 const getPath = ()=>{
   currentPath.paths = []
   let path = route.path.slice(1)

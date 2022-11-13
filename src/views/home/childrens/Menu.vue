@@ -7,9 +7,6 @@
           <div class="logo_titile">Vue<span class="logo_span">3</span>管理后台</div>
         </el-row>
       </router-link>
-        
-        
-
       <el-menu
         background-color="rgb(255, 255, 255)"
         text-color="rgb(22, 43, 100)"
@@ -19,27 +16,25 @@
         @open="handleOpen"
         @close="handleClose"
       >
-        <el-sub-menu
+      <MenuItem :menu="props.menus"/>
+        <!-- <el-sub-menu
           :key="item.menu_id"
           :index="item.menu_url"
           v-for="item in props.menus"
           >
           <template #title>
-            <!-- <el-menu-item :index="item.menu_title">
-              {{item.menu_title}}
-            </el-menu-item> -->
             <el-icon>
-              <img :src="`${prefix}`+item.menu_img" alt="" class="images">
+              <img :src="`${prefix}`+item.icon" alt="" class="images">
             </el-icon>
             <span>{{item.menu_title}}</span>
           </template>
             <el-menu-item 
             @click="currentMenuItem(submenu_list.submenu_url)" 
             :index="submenu_list.submenu_url" 
-            v-for="submenu_list in item.submenu_list"
+            v-for="submenu_list in item.children"
             :key="submenu_list.submenu_id" 
             >{{submenu_list.submenu_title}}</el-menu-item>
-        </el-sub-menu>
+        </el-sub-menu> -->
       </el-menu>
   </div>
 </template>
@@ -54,6 +49,7 @@ import {
 } from '@element-plus/icons-vue'
 import { reactive,ref } from 'vue'
 import { useRouter,useRoute } from 'vue-router'
+import MenuItem from './MenuItem.vue'
 const route = useRoute()
 //活动的路径
 let activeIndex = ref(route.path.replace("/home/",""))

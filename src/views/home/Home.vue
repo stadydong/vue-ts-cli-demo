@@ -27,6 +27,8 @@ import { HomeStore } from '@/store/home/home';
 import { ElMessage } from 'element-plus';
 import { useRoute } from 'vue-router';
   const homeStore = HomeStore()
+  console.log(homeStore.menu);
+  
   const route = useRoute()
   const breadcrumb = ref<InstanceType<typeof Breadcrumb>>()
   onMounted(async ()=>{
@@ -41,7 +43,6 @@ import { useRoute } from 'vue-router';
   const changeMenu = ()=>{
     console.log("changeMenu");
     console.log(route.path);
-    
     breadcrumb.value?.getPath()
     
   }

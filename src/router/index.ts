@@ -2,6 +2,7 @@ import {createRouter,createWebHashHistory} from 'vue-router'
 import type {RouteRecordRaw} from 'vue-router'
 import { UserStore } from '@/store/login/user'
 import { HomeStore } from '@/store/home/home'
+import { Menu_TYPE } from '@/service/api/home/types'
 
 
 const routes:RouteRecordRaw[] = [
@@ -19,11 +20,41 @@ const router = createRouter({
   history:createWebHashHistory(),
   routes
 })
+
+//进行路由递归注册
+function createMenu(menu:Menu_TYPE[]){
+  const router = [] as RouteRecordRaw[]
+  menu.forEach(e=>{
+    let e_router:any = {
+      name:e.menu_title,
+      // path:e.menu_url
+    }
+    if(e.viewPath){
+      e_router.component = import(`views/home/childrens/${e.menu_url}.vue`)
+    }else{
+      e_router.redirect = "/login"
+    }
+
+    let end = e.menu_url.lastIndexOf("/") +1
+    e_router.path = e.menu_url.substring(end)
+console.log(123);
+
+
+    
+    
+    
+    if(e.children.length !=0){
+      console.log(createMenu(e.children));
+      
+      e_router.children = createMenu(e.children)
+    }
+    router.push(e_router)
+  })
+  return router
+} 
 export async function add_Routes(){
   const homeStore = HomeStore()
-
   await homeStore.getlocalStorage()
-  console.log("router");
   const routes:RouteRecordRaw =   {
     name:"home",
     path:"/home",
@@ -32,30 +63,11 @@ export async function add_Routes(){
   }
   //必须连父级路由也动态注册  子路由添加在children里
     if(homeStore.menu.length>0){
-      homeStore.menu.map(item=>{
-        // router.addRoute("home",{path:item.menu_url})
-        // 是否有子路由      
-        if(item.submenu_list.length>0){
-
-          item.submenu_list.map(submenu_item=>{
-            let sub_router ={
-              path:`${submenu_item.submenu_url}`,
-              name:`${submenu_item.submenu_url}`,
-              component:()=>import(`views/home/childrens/${submenu_item.submenu_url}.vue`),
-            }
-            routes.children.push(sub_router)
-            
-          })
-          // console.log(routes);
-          
-          router.addRoute(routes)
-
-        }else{
-
-        }
-
-      })
+      // console.log(createMenu(homeStore.menu));
+      routes.children =  createMenu(homeStore.menu)
     }
+
+    
     return routes
 }
 let flag = true
@@ -69,7 +81,8 @@ router.beforeEach(async (to,from,next)=>{
     if(flag){
       let routes = await add_Routes()
       flag = false
-      console.log(111);
+      router.addRoute(routes)
+      
       
       next({...to,replace:true})
     }else{

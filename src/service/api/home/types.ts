@@ -3,18 +3,13 @@ export interface Menu_TYPE {
   createDate:Date
   updateDate:Date
   menu_id:number
-  menu_img:string
+  icon:string
   menu_title:string
   menu_url:string
-  submenu_list:SubMenu_list[]
-  type:number
+  children:Menu_TYPE[]
+  viewPath:string
 }
 
-export interface SubMenu_list{
-  submenu_id:number
-  submenu_title:string
-  submenu_url:string
-}
 
 export interface User_List {
   total:number

@@ -16,9 +16,7 @@ export const HomeStore = defineStore<storeId.Home,Home_State,{},Home_Actions>(st
   getters:{},
   actions:{
     async getlocalStorage(){
-
         const result = await this.getMenus()
-
     },
     async getMenus(){
       let message = "请求成功"  
