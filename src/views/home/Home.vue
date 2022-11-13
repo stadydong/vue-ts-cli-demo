@@ -41,6 +41,7 @@ import { useRoute } from 'vue-router';
       }
   })
   const changeMenu = ()=>{
+    
     console.log("changeMenu");
     console.log(route.path);
     breadcrumb.value?.getPath()

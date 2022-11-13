@@ -30,7 +30,7 @@ function createMenu(menu:Menu_TYPE[]){
       // path:e.menu_url
     }
     if(e.viewPath){
-      e_router.component = import(`views/home/childrens/${e.menu_url}.vue`)
+      e_router.component = ()=>import(`views/home/childrens/${e.menu_url}.vue`)
     }else{
       e_router.redirect = "/login"
     }
@@ -56,7 +56,7 @@ export async function add_Routes(){
   const homeStore = HomeStore()
   await homeStore.getlocalStorage()
   const routes:RouteRecordRaw =   {
-    name:"home",
+    name:"首页",
     path:"/home",
     component:()=>import("views/home/Home.vue"),
     children:[]

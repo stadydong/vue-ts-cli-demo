@@ -16,37 +16,14 @@
         @open="handleOpen"
         @close="handleClose"
       >
-      <MenuItem :menu="props.menus"/>
-        <!-- <el-sub-menu
-          :key="item.menu_id"
-          :index="item.menu_url"
-          v-for="item in props.menus"
-          >
-          <template #title>
-            <el-icon>
-              <img :src="`${prefix}`+item.icon" alt="" class="images">
-            </el-icon>
-            <span>{{item.menu_title}}</span>
-          </template>
-            <el-menu-item 
-            @click="currentMenuItem(submenu_list.submenu_url)" 
-            :index="submenu_list.submenu_url" 
-            v-for="submenu_list in item.children"
-            :key="submenu_list.submenu_id" 
-            >{{submenu_list.submenu_title}}</el-menu-item>
-        </el-sub-menu> -->
+        <MenuItem :menu="props.menus"/>
       </el-menu>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { Menu_TYPE } from '@/service/api/home/types';
-import {
-  Document,
-  Menu as IconMenu,
-  Location,
-  Setting,
-} from '@element-plus/icons-vue'
+
 import { reactive,ref } from 'vue'
 import { useRouter,useRoute } from 'vue-router'
 import MenuItem from './MenuItem.vue'

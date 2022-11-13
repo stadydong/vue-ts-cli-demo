@@ -12,16 +12,18 @@
       <MenuItem :menu="item.children"/>
     </el-sub-menu>
     <el-menu-item v-else :index="item.menu_title"  @click="currentMenu(item)">
-      <el-icon>
-        <img :src="`${prefix}`+item.icon" alt="" class="images">
+      <el-icon v-if="item.icon">
+        <img :src="`${prefix}`+item.icon" class="images">
       </el-icon>
       {{item.menu_title}}
     </el-menu-item>
   </div>
 </template>
 
-<script setup lang="ts">import { Menu_TYPE } from '@/service/api/home/types';
+<script setup lang="ts">
+import { Menu_TYPE } from '@/service/api/home/types';
 import { ref } from 'vue';
+const emit = defineEmits(["changeMenu"])
 const prefix = process.env.VUE_APP_AXIOS_BASEURL as string
 interface Props {
   menu:Menu_TYPE[]
@@ -30,6 +32,7 @@ const props = withDefaults(defineProps<Props>(),{
   menu:()=>[]
 })
 const currentMenu = (item:any)=>{
+  // emit("changeMenu",)
   console.log(item);
   
 }
